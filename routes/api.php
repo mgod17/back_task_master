@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\AuthController;
 
 
 Route::post('/users', [UserController::class, 'createUser']);
 Route::middleware('auth:sanctum')->post('/users/configure-password', [UserController::class, 'configurePassword']);
 
-
+Route::post('login', [AuthController::class, 'login']);
+Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']);
