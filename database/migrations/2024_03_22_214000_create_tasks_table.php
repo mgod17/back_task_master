@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreign('assigned_to')
             ->references('id')
             ->on('users')
-            ->onDelete('set default');
+            ->onDelete('set null');
             });
     }
 

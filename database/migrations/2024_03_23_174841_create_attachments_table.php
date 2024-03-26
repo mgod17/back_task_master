@@ -12,7 +12,7 @@ return new class extends Migration
     Schema::create('attachments', function (Blueprint $table) {
         $table->id();
         $table->unsignedBigInteger('task_id'); 
-        $table->unsignedBigInteger('user_id'); 
+        $table->unsignedBigInteger('user_id')->nullable(); 
         $table->string('file_path'); 
         $table->timestamps();
 
