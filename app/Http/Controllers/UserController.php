@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -17,6 +16,7 @@ class UserController extends Controller
     {
         try {
             $randomPassword = Str::random(12);
+
             $user = User::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
@@ -31,25 +31,6 @@ class UserController extends Controller
             return response()->json(['error' => 'An error occurred while processing your request. Please try again later.'], 500);
         }
 
-    }
-
-    public function resetPassword(Request $request)
-    {
-        $request->validate([
-            'password' => 'required|string|min:8|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
-        ]);
-        try {
-            $user = User::where('email', $request->input('email'))->firstOrFail();
-
-            $token = Str::random(60);
-            $user->reset_password_token = $token;
-            $user->save();
-
-
-            return response()->json(['message' => 'Se ha enviado un enlace para restablecer la contraseña a su dirección de correo electrónico.']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Ha ocurrido un error al enviar el correo electrónico para restablecer la contraseña.'], 500);
-        }
     }
 
     public function index()

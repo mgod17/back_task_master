@@ -10,3 +10,4 @@ Route::middleware('auth:sanctum')->post('/users/configure-password', [UserContro
 
 Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']);
+Route::middleware('auth:api')->post('/reset-password', [AuthController::class, 'resetPassword']);
