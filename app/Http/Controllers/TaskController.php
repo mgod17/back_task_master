@@ -11,7 +11,7 @@ class TaskController extends Controller
     public function index()
     {
         try {
-            if (!Auth::user()->isSuperAdmin()) {
+            if (!Auth::user()->is_admin) {
                 $tasks = Task::where('assigned_to', Auth::id())->get();
             } else {
                 $tasks = Task::all();
@@ -34,10 +34,11 @@ class TaskController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
     public function store(Request $request)
     {
         try {
-            if (!Auth::user()->isSuperAdmin()) {
+            if (!Auth::user()->is_admin) {
                 return response()->json(['error' => 'Unauthorized'], 403);
             }
 
@@ -46,6 +47,7 @@ class TaskController extends Controller
                 'description' => 'nullable|string',
                 'assigned_to' => 'required|exists:users,id'
             ]);
+
             $task = new Task();
             $task->title = $request->title;
             $task->description = $request->description;
@@ -58,10 +60,11 @@ class TaskController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
     public function destroy($id)
     {
         try {
-            if (!Auth::user()->isSuperAdmin()) {
+            if (!Auth::user()->is_admin) {
                 return response()->json(['error' => 'Unauthorized'], 403);
             }
 
@@ -73,9 +76,10 @@ class TaskController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
     private function userHasPermission($task)
     {
-        if (Auth::user()->isSuperAdmin()) {
+        if (Auth::user()->is_admin) {
             return true;
         }
         if ($task->assigned_to == Auth::id()) {

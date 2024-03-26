@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    public function createUser(Request $request)
+    public function store(Request $request)
     {
         try {
             $randomPassword = Str::random(12);
@@ -60,7 +60,7 @@ class UserController extends Controller
     public function makeAdmin($id)
     {
         $user = User::findOrFail($id);
-        $user->role = 'admin';
+        $user->is_admin = true;
         $user->save();
 
         return response()->json($user, 200);
