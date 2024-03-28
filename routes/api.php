@@ -14,7 +14,7 @@ Route::put('/users/{id}/make-admin', [UserController::class, 'makeAdmin']);
 Route::post('/users', [UserController::class, 'createUser']);
 Route::middleware('auth:sanctum')->post('/users/configure-password', [UserController::class, 'configurePassword']);
 
-Route::post('login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.reset');
 Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']);
 Route::middleware('auth:api')->post('/reset-password', [AuthController::class, 'resetPassword']);

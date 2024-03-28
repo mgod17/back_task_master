@@ -70,7 +70,7 @@ class AuthController extends Controller
                 ['email' => $user->email],
                 ['token' => $token, 'created_at' => now()]
             );
-            $resetUrl = URL::signedRoute('password.reset', ['token' => $token]);
+            $resetUrl = url("http://localhost:8080/reset-password?token={$token}");
             Mail::to($user->email)->send(new ResetPasswordMail($resetUrl));
             $user->update(['first_login' => true]);
 
